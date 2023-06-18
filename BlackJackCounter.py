@@ -4,6 +4,7 @@ from tkinter import messagebox
 deeckcount=1
 cardcount=52
 counter=0
+test=True
 # Cardname | Point | Number of Cards | Possibility
 cards=[
     [0,2,2,deeckcount*4,4/52],       #0
