@@ -59,6 +59,10 @@ def updatetexts():
 def Reset():
     global counter
     counter=0
+    global deckcount
+    deckcount=6
+    global cardcount
+    cardcount=52
     global cards
     cards=[
         [0,2,2,deckcount*4,4/52],       #0
@@ -75,6 +79,7 @@ def Reset():
         [11,'K',10,deckcount*4,4/52],    #11
         [12,'A',11,deckcount*4,4/52]     #12
         ]
+    updatetexts()
 def CardCount(row):
     global counter
     if(cards[row][3]!=0):
@@ -149,6 +154,9 @@ probofcardsframe=Frame(master)
 probofcardsframe.place(relx=0.02,rely=0.3)
 framecardcounter=Frame(master)
 framecardcounter.place(relx=0.5,rely=0.3)
+resetbt=Button(text='Reset',font=fonttype,command=lambda:Reset())
+resetbt.grid()
+resetbt.place(relx=0.8,rely=0.8)
 #Card Buttons
 card2=Button(framecardsbt,text=cards[0][1],font=fonttype,command= lambda:Hit(cards[0][0]))
 card2.grid(row=0,column=0,padx=15,pady=15)
