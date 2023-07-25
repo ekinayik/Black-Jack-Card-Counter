@@ -5,6 +5,7 @@ lastoperation=0
 deckcount=6
 cardcount=52
 counter=0
+halvescount=0
 test=True
 # Cardname | Point | Number of Cards | Possibility
 cards=[
@@ -24,6 +25,7 @@ cards=[
     ]
 def Hit(row):
     CardCount(row)
+    HalvesCount(row)
     Dec(row)
     print('Card Counter : ' + str(counter))
     updatetexts()
@@ -55,6 +57,12 @@ def updatetexts():
     probtextK.config(text = str(cards[11][1]) + '     |     %' + str(cards[11][4]*100))
     probtextA.config(text = str(cards[12][1]) + '     |     %' + str(cards[12][4]*100))
     cardcountertext.config(text='Card Counter : ' + str(counter))
+    if(deckcount==0):
+        truecardcountertext.config(text='True Counter : ' + str(counter))
+        halvescardcountertext.config(text='Halves Counter : ' + str(halvescount))
+    else:
+        truecardcountertext.config(text='True Counter : ' + str(counter/deckcount))
+        halvescardcountertext.config(text='Halves Counter : ' + str(halvescount/deckcount))
     proboften.config(text='Prob Of Ten = '+ str((cards[8][4]+cards[9][4]+cards[10][4]+cards[11][4])*100))
 def Reset():
     global counter
@@ -63,6 +71,8 @@ def Reset():
     deckcount=6
     global cardcount
     cardcount=52
+    global halvescount
+    halvescount=0
     global cards
     cards=[
         [0,2,2,deckcount*4,4/52],       #0
@@ -87,6 +97,19 @@ def CardCount(row):
             counter=counter+1
         elif(row>7):
             counter=counter-1
+def HalvesCount(row):
+    global halvescount
+    if(cards[row][3]!=0):
+        if(row==0 or halvescount==5):
+            halvescount=halvescount+0.5
+        elif(row==1 or row ==2 or row ==4):
+            halvescount=halvescount+1
+        elif(row==3):
+            halvescount=halvescount+1.5
+        elif(row==7):
+            halvescount=halvescount-0.5
+        elif(row>7):
+            halvescount=halvescount-1
 #working on
 def HardTotals(tot):
     if(tot>=17):
@@ -189,6 +212,12 @@ cardA.grid(row=1,column=5,padx=15,pady=15)
 cardcountertext=Label(framecardcounter,text='Card Counter : ' + str(counter))
 cardcountertext.config(font=("Courier",14))
 cardcountertext.grid()
+truecardcountertext=Label(framecardcounter,text='True Count : ' + str(counter/deckcount))
+truecardcountertext.config(font=("Courier",14))
+truecardcountertext.grid()
+halvescardcountertext=Label(framecardcounter,text='Halves Count : ' + str(halvescount/deckcount))
+halvescardcountertext.config(font=("Courier",14))
+halvescardcountertext.grid()
 proboften=Label(framecardcounter,text='Prob Of Ten = '+ str((cards[8][4]+cards[9][4]+cards[10][4]+cards[11][4])*100))
 proboften.config(font=("Courier",14))
 proboften.grid()
